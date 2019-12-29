@@ -34,6 +34,12 @@ class MainActivity : AppCompatActivity() {
         val navigationController = findNavController(R.id.myNavHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navigationController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navigationView, navigationController)
+        navigationController.addOnDestinationChangedListener { controller, destination, _ ->
+            drawerLayout.setDrawerLockMode(
+                    if (destination.id == controller.graph.startDestination) DrawerLayout.LOCK_MODE_UNLOCKED
+                    else DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+            )
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
